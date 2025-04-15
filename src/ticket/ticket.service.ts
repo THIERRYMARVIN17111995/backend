@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Ticket, TicketFilter } from './interfaces/ticket';
+import { Ticket, TicketFilter, TicketResponse } from './interfaces/ticket';
 
 @Injectable()
 export class TicketService {
@@ -41,34 +41,9 @@ export class TicketService {
     findAll(): Ticket[] {
         return this.tickets;
     }
-    // filterTickets(ticketFiltre: TicketFilter): Ticket[] {
-    //     const { agence, priceMin, priceMax,page,limit } = ticketFiltre;
-    //     const filtered= this.tickets.filter(ticket => {
-    //         const matchAgence = !agence || ticket.agence === agence;
-    //         const matchMin = priceMin === undefined || ticket.prix >= priceMin;
-    //         const matchMax = priceMax === undefined || ticket.prix <= priceMax;
-    //         return matchAgence && matchMin && matchMax;
-    //     });
+  
 
-    //     const total = filtered.length;
-    //     const startIndex = (page - 1) * limit;
-    //     const endIndex = startIndex + limit;
-    //     const paginated = filtered.slice(startIndex, endIndex);
-
-    //     return {
-    //         data: paginated,
-    //         total,
-    //         currentPage: page,
-    //         totalPages: Math.ceil(total / limit),
-    //     };
-    // }
-
-    filterTickets(ticketFiltre: TicketFilter): {
-        data: Ticket[];
-        total: number;
-        currentPage: number;
-        totalPages: number;
-      } {
+    filterTickets(ticketFiltre: TicketFilter):TicketResponse {
         const { agence, priceMin, priceMax, page = 1, limit = 10 } = ticketFiltre;
       
         const filtered = this.tickets.filter(ticket => {
